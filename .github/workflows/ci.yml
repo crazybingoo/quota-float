@@ -3,6 +3,7 @@ name: CI
 on:
   push:
   pull_request:
+  workflow_dispatch:
 
 jobs:
   frontend:
@@ -51,6 +52,8 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.artifact-name }}
-          path: ${{ matrix.artifact-path }}
+          path: |
+            ${{ matrix.artifact-path }}
+            src-tauri/target/release/quota-float.exe
           if-no-files-found: error
           retention-days: 14
