@@ -20,7 +20,7 @@
         "minHeight": 80,
         "maxWidth": 360,
         "maxHeight": 360,
-        "resizable": true,
+        "resizable": false,
         "decorations": false,
         "transparent": true,
         "alwaysOnTop": true,
