@@ -10,10 +10,10 @@ describe("widget window sizing", () => {
       height: 100,
       minWidth: 80,
       minHeight: 80,
-      maxWidth: 360,
-      maxHeight: 360,
       resizable: false,
       decorations: false,
     });
+    expect(widget).not.toHaveProperty("maxWidth");
+    expect(widget).not.toHaveProperty("maxHeight");
   });
 });

@@ -53,11 +53,16 @@ export async function startDragging(): Promise<void> {
   await getCurrentWindow().startDragging();
 }
 
+export function widgetPhysicalPixels(expanded: boolean, devicePixelRatio: number): number {
+  const ratio = Number.isFinite(devicePixelRatio) && devicePixelRatio > 0 ? devicePixelRatio : 1;
+  return Math.ceil((expanded ? 320 : 100) * ratio);
+}
+
 export async function setWidgetExpanded(expanded: boolean): Promise<void> {
   if (!isTauri()) return;
-  const { getCurrentWindow, LogicalSize } = await import("@tauri-apps/api/window");
-  const size = expanded ? new LogicalSize(320, 320) : new LogicalSize(100, 100);
-  await getCurrentWindow().setSize(size);
+  const { getCurrentWindow, PhysicalSize } = await import("@tauri-apps/api/window");
+  const pixels = widgetPhysicalPixels(expanded, window.devicePixelRatio);
+  await getCurrentWindow().setSize(new PhysicalSize(pixels, pixels));
 }
 
 export async function listenDesktopEvents(handlers: {

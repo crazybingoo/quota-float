@@ -59,6 +59,10 @@ export default function App() {
   }, [refresh]);
 
   useEffect(() => {
+    void setWidgetExpanded(false).catch(() => setOperationError("Widget size initialization failed."));
+  }, []);
+
+  useEffect(() => {
     const updateCompact = () => setCompact(window.innerWidth <= 120 || window.innerHeight <= 120);
     updateCompact();
     window.addEventListener("resize", updateCompact);
