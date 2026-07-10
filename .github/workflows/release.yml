@@ -42,6 +42,10 @@ jobs:
       - run: npm test
       - run: cargo test --manifest-path src-tauri/Cargo.toml
       - run: ${{ matrix.build-command }}
+      - name: Include portable Windows executable
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: Copy-Item "src-tauri/target/release/quota-float.exe" "src-tauri/target/release/bundle/quota-float.exe"
       - name: Archive bundle
         shell: pwsh
         run: Compress-Archive -Path "${{ matrix.artifact-path }}" -DestinationPath "${{ matrix.archive-name }}" -Force
@@ -54,5 +58,5 @@ jobs:
       - uses: softprops/action-gh-release@v2
         with:
           files: ${{ matrix.archive-name }}
-          draft: false
+          draft: true
           generate_release_notes: true
